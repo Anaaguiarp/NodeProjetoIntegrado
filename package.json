@@ -1,0 +1,27 @@
+{
+  "name": "nodeprojetointegrado",
+  "version": "1.0.0",
+  "description": "node do projeto",
+  "homepage": "https://github.com/Anaaguiarp/NodeProjetoIntegrado#readme",
+  "bugs": {
+    "url": "https://github.com/Anaaguiarp/NodeProjetoIntegrado/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anaaguiarp/NodeProjetoIntegrado.git"
+  },
+  "license": "ISC",
+  "author": "Ana Carolina Aguiar Pereira",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  }
+}
