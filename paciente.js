@@ -33,9 +33,16 @@ app.post("/paciente", (req, res) => {
 // UPDATE
 app.get("/editarpaciente/:idpaciente", (req, res) => {
     const codigoPaciente = req.params.idpaciente;
-    console.log("Editando o cliente: ", codigoPaciente);
-    res.send("Editando o cliente: " + codigoPaciente);
+    console.log("Editando o paciente: ", codigoPaciente);
+    res.send("Editando o paciente: " + codigoPaciente);
 });
+
+// DELETE
+app.delete("/paciente/:idpaciente", (req, res) => {
+    const codigoPaciente = req.params.idpaciente;
+    //método no banco de dados para remover um cliente passando o id
+    res.send("Paciente removido com sucesso!");
+})
 
 app.listen(3000, () => {
     console.log("Servidor rodando na porta 3000");
