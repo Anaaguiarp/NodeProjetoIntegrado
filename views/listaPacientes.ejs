@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Pacientes</title>
+</head>
+<body>
+    <h1>Lista de Pacientes</h1>
+    <% if (pacientes && pacientes.length > 0) { %>
+        <ul>
+            <% pacientes.forEach(pac => { %>
+                <li>
+                  <strong>Nome:</strong> <%= pac.nome %> | 
+                  <strong>Nome Social:</strong> <%= pac.nome_social %> | 
+                  <strong>E-mail:</strong> <%= pac.email %> | 
+                  <strong>Data de Nascimento:</strong> <%= pac.data_nascimento %>
+                  <strong>Data de Nascimento:</strong> <%= pac.data_nascimento %>
+                  <strong>Data de Nascimento:</strong> <%= pac.data_nascimento %>
+                  <strong>Gênero:</strong> <%= pac.genero %>
+                  <strong>Tipo Sanguíneo:</strong> <%= pac.tipo_sanguineo %>
+                  <strong>Medicação:</strong> <%= pac.medicacao %>
+                  <strong>Doenças:</strong> <%= pac.doencas %>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>Nenhum paciente cadastrado.</p>
+    <% } %>
+</body>
+</html>
