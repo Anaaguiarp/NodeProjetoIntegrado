@@ -1,4 +1,5 @@
-// require './paciente';????
+const pacienteRouter = require('./paciente');
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
@@ -58,6 +59,8 @@ app.delete("/cliente/:idcliente", (req, res) => {
 app.get("/fornecedores", (req, res) => {
     res.end("<html><head><title>Listagem de fornecedores</title></head><body><h3>Página de Listagem de Fornecedores</h3><h5>Lista abaixo</h5></body></html>");
 })
+
+app.use("/paciente", pacienteRouter);
 
 app.listen(3000, () => {
     console.log("Servidor rodando na porta 3000");

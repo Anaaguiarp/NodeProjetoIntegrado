@@ -1,5 +1,5 @@
 {
-  "name": "projeto",
+  "name": "integrado_node",
   "version": "1.0.0",
   "description": "node do projeto",
   "homepage": "https://github.com/Anaaguiarp/NodeProjetoIntegrado#readme",
@@ -23,5 +23,6 @@
     "body-parser": "^2.2.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0"
-  }
+  },
+  "devDependencies": {}
 }

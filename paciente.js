@@ -1,49 +1,31 @@
-console.log("Paciente!");
-
 const express = require("express");
-const bodyParser = require("body-parser");
-const app = express();
+const router = express.Router();
 
-app.use(bodyParser.json);
+console.log("Paciente router carregado!");
 
-app.use(bodyParser.urlencoded({extended: true}));
-
-app.set("view engine", "ejs");
-
-app.get("/", (req, res) => {
-    res.send("Página inicial");
-});
-
-app.get("/pacientes", (req, res) => {
+router.get("/", (req, res) => {
     res.send("Listagem de Pacientes");
 });
 
-app.get("/cadastrarpaciente", (req, res) => {
+router.get("/cadastrar", (req, res) => {
     res.render("formPaciente");
 });
 
-// INSERIR
-app.post("/paciente", (req, res) => {
-    const {} = req.body;
-
-    console.log("Nome: " + + " CNPJ: " +  + " Data: " );
+router.post("/", (req, res) => {
+    const { nome, cpf, dataNascimento } = req.body;
+    console.log("Nome:", nome, "CPF:", cpf, "Data:", dataNascimento);
     res.send("Paciente inserido com sucesso!");
 });
 
-// UPDATE
-app.get("/editarpaciente/:idpaciente", (req, res) => {
+router.get("/editar/:idpaciente", (req, res) => {
     const codigoPaciente = req.params.idpaciente;
     console.log("Editando o paciente: ", codigoPaciente);
     res.send("Editando o paciente: " + codigoPaciente);
 });
 
-// DELETE
-app.delete("/paciente/:idpaciente", (req, res) => {
+router.delete("/:idpaciente", (req, res) => {
     const codigoPaciente = req.params.idpaciente;
-    //método no banco de dados para remover um cliente passando o id
     res.send("Paciente removido com sucesso!");
-})
+});
 
-app.listen(3000, () => {
-    console.log("Servidor rodando na porta 3000");
-})
+module.exports = router;
