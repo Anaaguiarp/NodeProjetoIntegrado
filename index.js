@@ -17,7 +17,7 @@ app.set("view engine", "ejs");
 
 //Implementado rotas do tipo GET
 app.get("/", (req, res) => {
-    res.send("Página inicial");
+    res.send("<h1>Página inicial</h1>");
 })
 
 //Listar (read) os clientes
