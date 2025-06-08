@@ -1,49 +1,81 @@
-console.log("Administrador!");
-
 const express = require("express");
-const bodyParser = require("body-parser");
-const app = express();
+const router = express.Router();
+const administrador = require("../model/administrador");
 
-app.use(bodyParser.json);
+console.log("Administrador controller carregado!");
 
-app.use(bodyParser.urlencoded({extended: true}));
-
-app.set("view engine", "ejs");
-
-app.get("/", (req, res) => {
-    res.send("Página inicial");
+// READ - Listar administradores
+router.get("/", (req, res) => {
+    const administradores = administrador.listarAdministradores();
+    res.render("listaAdministradores", { administradores });
 });
 
-app.get("/administradores", (req, res) => {
-    res.send("Listagem de Administradores");
+// CREATE - Mostrar formulário
+router.get("/cadastrar", (req, res) => {
+    res.render("formAdministrador", { administrador: {} });
 });
 
-app.get("/cadastraradministrador", (req, res) => {
-    res.render("formAdministrador");
+// CREATE - Cadastro do adm
+router.post("/", (req, res) => {
+    console.log("Recebido no corpo:", req.body);
+    const {
+        nome,
+        nome_social,
+        email,
+        senha,
+        confirmacao_senha,
+        data_nascimento,
+        genero,
+        conselhoProfissional,
+        formacao,
+        registroProfissional,
+        especialidade
+    } = req.body;
+
+    const novoAdministrador = {
+        nome,
+        nome_social,
+        email,
+        senha,
+        confirmacao_senha,
+        data_nascimento,
+        genero,
+        conselhoProfissional,
+        formacao,
+        registroProfissional,
+        especialidade
+    };
+
+    administrador.cadastrarAdministrador(novoAdministrador);
+
+    res.redirect("/administrador"); // redireciona pra listagem
 });
 
-// INSERIR
-app.post("/administrador", (req, res) => {
-    const {} = req.body;
+// formulário com dados do administrador
+router.get("/editar/:idadministrador", (req, res) => {
+    const id = req.params.idadministrador;
+    const admEncontrado = administrador.buscarAdministradorPorId(id);
 
-    console.log("Nome: " + + " CNPJ: " +  + " Data: " );
-    res.send("Administrador inserido com sucesso!");
+    if (admEncontrado) {
+        res.render("formAdministrador", { administrador: admEncontrado });
+    } else {
+        res.status(404).send("Administrador não encontrado");
+    }
 });
 
 // UPDATE
-app.get("/editaradministrador/:idadministrador", (req, res) => {
-    const codigoAdministrador = req.params.idadministrador;
-    console.log("Editando o paciente: ", codigoAdministrador);
-    res.send("Editando o paciente: " + codigoAdministrador);
+router.put("/:idadministrador", (req, res) => {
+    const id = req.params.idadministrador;
+    const dados = req.body;
+    administrador.atualizarAdministrador(id, dados);
+    res.send("Administrador atualizado com sucesso!");
 });
 
 // DELETE
-app.delete("/administrador/:idadministrador", (req, res) => {
-    const codigoPaciente = req.params.idpaciente;
-    //método no banco de dados para remover um cliente passando o id
+router.delete("/:idadministrador", (req, res) => {
+    const id = req.params.idadministrador;
+    administrador.removerAdministrador(id);
     res.send("Administrador removido com sucesso!");
-})
+});
 
-app.listen(3000, () => {
-    console.log("Servidor rodando na porta 3000");
-})
+module.exports = router;

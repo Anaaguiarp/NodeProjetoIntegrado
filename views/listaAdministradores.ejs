@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Administradores</title>
+</head>
+<body>
+    <h1>Lista de Administradores</h1>
+    <% if (administradores && administradores.length > 0) { %>
+        <ul>
+            <% administradores.forEach(adm => { %>
+                <li>
+                  <strong>Nome:</strong> <%= adm.nome %> | 
+                  <strong>Email:</strong> <%= adm.email %> | 
+                  <strong>Gênero:</strong> <%= adm.genero %> | 
+                  <strong>Formação:</strong> <%= adm.formacao %>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>Nenhum administrador cadastrado.</p>
+    <% } %>
+</body>
+</html>
