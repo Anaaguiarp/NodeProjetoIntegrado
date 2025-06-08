@@ -1,8 +1,11 @@
-const pacienteRouter = require('./paciente');
+const pacienteRouter = require('./controller/pacienteController');
+const administradorRouter = require('./controller/administradorController');
 
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const PORT = 3000;
+const IP = "127.0.0.1";
 
 //Configurando para sempre receber os dados no formato JSON
 app.use(bodyParser.json());
@@ -61,6 +64,7 @@ app.get("/fornecedores", (req, res) => {
 })
 
 app.use("/paciente", pacienteRouter);
+app.use("/administrador", administradorRouter);
 
 app.listen(3000, () => {
     console.log("Servidor rodando na porta 3000");
