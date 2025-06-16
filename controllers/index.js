@@ -217,6 +217,79 @@ app.get('/removerpaciente/:id', async (req, res) => {
     }
 });
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ☆ CONTENUDO ☆
+
+const {getConteudos, insertConteudo, editConteudo, deleteConteudo} = require("../models/DAO/ConteudoDAO");
+
+// READ
+app.get("/conteudos", async (req, res) => {
+    const conteudos = await getConteudos();
+    console.log("Conteúdos: ", conteudos);
+
+    res.status(200).render("listaConteudos", { conteudosDoController: conteudos });
+});
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+// Formulário - CREATE
+app.get('/novoconteudo', (req, res) => {
+    res.render('formConteudo', { conteudo: {} });
+});
+
+// CREATE
+app.post('/conteudo', async (req, res) => {
+    const {titulo, texto} = req.body;
+    const sucesso = await insertConteudo(titulo, texto);
+
+    if (sucesso) {
+        res.redirect('/conteudos');
+    } else {
+        res.status(400).send("Erro ao cadastrar conteúdo.");
+    }
+});
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+// Formulário - UPDATE
+app.get('/editarconteudo/:id', async (req, res) => {
+    const { id } = req.params;
+    const conteudos = await getConteudos();
+    const conteudo = conteudos.find(c => c.id == id);
+
+    if(conteudo){
+        res.render('formConteudo', { conteudo });
+    }else{
+        res.status(404).send("Conteúdo não encontrado.");
+    }
+});
+
+// UPDATE
+app.post('/editarconteudo/:id', async (req, res) => {
+    const {id} = req.params;
+    const {titulo, texto} = req.body;
+    const sucesso = await editConteudo(id, titulo, texto);
+
+    if(sucesso){
+        res.redirect('/conteudos');
+    }else{
+        res.status(400).send("Erro ao editar conteúdo.");
+    }
+});
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+// DELETE
+app.get('/removerconteudo/:id', async (req, res) => {
+    const {id} = req.params;
+    const sucesso = await deleteConteudo(id);
+
+    if (sucesso) {
+        res.redirect('/conteudos');
+    } else {
+        res.status(400).send("Erro ao remover conteúdo :(");
+    }
+});
+
 app.listen(3000, 'localhost', () => {
     console.log("Servidor rodando na porta 3000");
 });
