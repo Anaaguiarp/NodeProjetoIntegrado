@@ -137,6 +137,84 @@ app.delete("/api/administrador", async (req, res) => {
     return res.status(404).json({sucess: false});
 });
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ☆ PACIENTE ☆
+
+const {getPacientes, insertPaciente, editPaciente, deletePaciente} = require("../models/DAO/PacienteDAO");
+
+// READ
+app.get("/pacientes", async (req, res) => {
+    const pacientes = await getPacientes();
+    console.log("Pacientes: ", pacientes);
+
+    res.status(200).render("listaPacientes", { pacientesDoController: pacientes });
+});
+
+// Formulário - CREATE
+app.get('/paciente/form', (req, res) => {
+    res.render('formPaciente');
+});
+
+// CREATE
+app.post('/paciente', async (req, res) => {
+    const {
+        nome, nome_social, email, senha, confirmacao_senha,
+        data_nascimento, genero, estado, cidade, medicacao, doenca, tipo_sanguineo
+    } = req.body;
+
+    const sucesso = await insertPaciente(
+        nome, nome_social, email, senha, confirmacao_senha,
+        data_nascimento, genero, estado, cidade, medicacao, doenca, tipo_sanguineo
+    );
+
+    if (sucesso) {
+        res.redirect('/pacientes');
+    } else {
+        res.status(400).send("Erro ao cadastrar paciente.");
+    }
+});
+
+// Formulário - UPDATE
+app.get('/editarpaciente/:id', async (req, res) => {
+    const { id } = req.params;
+    const pacientes = await getPacientes();
+    const paciente = pacientes.find(p => p.id == id);
+
+    if (paciente) {
+        res.render('paciente/edit', { paciente });
+    } else {
+        res.status(404).send("Paciente não encontrado.");
+    }
+});
+
+// UPDATE
+app.post('/editarpaciente/:id', async (req, res) => {
+    const { id } = req.params;
+    const {nome, nome_social, email, senha, confirmacao_senha, data_nascimento, genero, estado, cidade, medicacao, doenca, tipo_sanguineo
+    } = req.body;
+
+    const sucesso = await editPaciente( id, nome, nome_social, email, senha, confirmacao_senha, data_nascimento, genero, estado, cidade, medicacao, doenca, tipo_sanguineo
+    );
+
+    if (sucesso) {
+        res.redirect('/pacientes');
+    } else {
+        res.status(400).send("Erro ao editar paciente.");
+    }
+});
+
+// DELETE
+app.get('/removerpaciente/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const sucesso = await deletePaciente(id);
+
+    if (sucesso) {
+        res.redirect('/pacientes');
+    } else {
+        res.status(400).send("Erro ao remover paciente.");
+    }
+});
+
 app.listen(3000, 'localhost', () => {
     console.log("Servidor rodando na porta 3000");
 });
