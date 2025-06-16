@@ -146,7 +146,7 @@ app.get("/pacientes", async (req, res) => {
     const pacientes = await getPacientes();
     console.log("Pacientes: ", pacientes);
 
-    res.status(200).render("listaPacientes", { pacientesDoController: pacientes });
+    res.status(200).render("listaPacientes", {pacientesDoController: pacientes});
 });
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -164,9 +164,9 @@ app.post('/paciente', async (req, res) => {
     const sucesso = await insertPaciente(nome, nome_social, email, senha, confirmacao_senha, data_nascimento, genero, estado, cidade, medicacao, doenca, tipo_sanguineo
     );
 
-    if (sucesso) {
+    if (sucesso){
         res.redirect('/pacientes');
-    } else {
+    }else{
         res.status(400).send("Erro ao cadastrar paciente.");
     }
 });
@@ -179,9 +179,9 @@ app.get('/editarpaciente/:id', async (req, res) => {
     const pacientes = await getPacientes();
     const paciente = pacientes.find(p => p.id == id);
 
-    if (paciente) {
+    if(paciente){
         res.render('paciente/edit', { paciente });
-    } else {
+    }else{
         res.status(404).send("Paciente não encontrado.");
     }
 });
@@ -196,9 +196,9 @@ app.post('/editarpaciente/:id', async (req, res) => {
     const sucesso = await editPaciente( id, nome, nome_social, email, senha, confirmacao_senha, data_nascimento, genero, estado, cidade, medicacao, doenca, tipo_sanguineo
     );
 
-    if (sucesso) {
+    if(sucesso){
         res.redirect('/pacientes');
-    } else {
+    }else{
         res.status(400).send("Erro ao editar paciente.");
     }
 });
@@ -210,9 +210,9 @@ app.get('/removerpaciente/:id', async (req, res) => {
     const {id} = req.params;
     const sucesso = await deletePaciente(id);
 
-    if (sucesso) {
+    if(sucesso){
         res.redirect('/pacientes');
-    } else {
+    }else{
         res.status(400).send("Erro ao remover paciente.");
     }
 });
