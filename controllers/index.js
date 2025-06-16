@@ -149,6 +149,8 @@ app.get("/pacientes", async (req, res) => {
     res.status(200).render("listaPacientes", { pacientesDoController: pacientes });
 });
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 // Formulário - CREATE
 app.get('/paciente/form', (req, res) => {
     res.render('formPaciente');
@@ -156,14 +158,10 @@ app.get('/paciente/form', (req, res) => {
 
 // CREATE
 app.post('/paciente', async (req, res) => {
-    const {
-        nome, nome_social, email, senha, confirmacao_senha,
-        data_nascimento, genero, estado, cidade, medicacao, doenca, tipo_sanguineo
+    const {nome, nome_social, email, senha, confirmacao_senha, data_nascimento, genero, estado, cidade, medicacao, doenca, tipo_sanguineo
     } = req.body;
 
-    const sucesso = await insertPaciente(
-        nome, nome_social, email, senha, confirmacao_senha,
-        data_nascimento, genero, estado, cidade, medicacao, doenca, tipo_sanguineo
+    const sucesso = await insertPaciente(nome, nome_social, email, senha, confirmacao_senha, data_nascimento, genero, estado, cidade, medicacao, doenca, tipo_sanguineo
     );
 
     if (sucesso) {
@@ -173,9 +171,11 @@ app.post('/paciente', async (req, res) => {
     }
 });
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 // Formulário - UPDATE
 app.get('/editarpaciente/:id', async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
     const pacientes = await getPacientes();
     const paciente = pacientes.find(p => p.id == id);
 
@@ -188,7 +188,8 @@ app.get('/editarpaciente/:id', async (req, res) => {
 
 // UPDATE
 app.post('/editarpaciente/:id', async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
+
     const {nome, nome_social, email, senha, confirmacao_senha, data_nascimento, genero, estado, cidade, medicacao, doenca, tipo_sanguineo
     } = req.body;
 
@@ -202,10 +203,11 @@ app.post('/editarpaciente/:id', async (req, res) => {
     }
 });
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 // DELETE
 app.get('/removerpaciente/:id', async (req, res) => {
-    const { id } = req.params;
-
+    const {id} = req.params;
     const sucesso = await deletePaciente(id);
 
     if (sucesso) {
