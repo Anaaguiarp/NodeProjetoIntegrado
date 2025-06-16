@@ -11,18 +11,18 @@
     "url": "git+https://github.com/Anaaguiarp/NodeProjetoIntegrado.git"
   },
   "license": "ISC",
-  "author": "Ana Carolina Aguiar Pereira",
+  "author": "Ana Carolina e Luiza Mariana",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node controllers/index.js",
+    "dev": "nodemon controllers/index.js"
   },
   "dependencies": {
     "body-parser": "^2.2.0",
     "ejs": "^3.1.10",
-    "express": "^5.1.0"
-  },
-  "devDependencies": {}
+    "express": "^5.1.0",
+    "pg": "^8.16.0"
+  }
 }
