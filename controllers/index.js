@@ -152,7 +152,7 @@ app.get("/pacientes", async (req, res) => {
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 // Formulário - CREATE
-app.get('/paciente/form', (req, res) => {
+app.get('/novopaciente', (req, res) => {
     res.render('formPaciente');
 });
 
